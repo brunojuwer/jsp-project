@@ -25,7 +25,9 @@ public class ServletLogin extends HttpServlet {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String url = request.getParameter("url");
 				
+		
 		if(!username.isEmpty() && !password.isEmpty()) {
 			Login login = new Login();
 			login.setUsername(username);
@@ -33,8 +35,12 @@ public class ServletLogin extends HttpServlet {
 			
 			if(login.getUsername().equalsIgnoreCase("admin") && login.getPassword().equals("admin")) {
 				
-				request.getSession().setAttribute("usuario", login.getUsername());
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/home.jsp");
+				if(url == null || url.equals("null")) {
+					url = "main/home.jsp";
+				}
+				
+				request.getSession().setAttribute("user", login.getUsername());
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
 				request.setAttribute("msg", "Username and Password can not be empty!");
 				requestDispatcher.forward(request, response);
 				
