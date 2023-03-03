@@ -8,11 +8,10 @@
 </head>
 <body>
 	<h1>Welcome</h1>
-	<form action="receber-nome.jsp">
+	<form action="/Projeto-jsp/Login" method="post">
 		<input name="nome" type="text"/>
 		<input name="idade" type="number"/>
 		<input type="submit" value="Enviar"/>
 	</form>
-
 </body>
 </html>
