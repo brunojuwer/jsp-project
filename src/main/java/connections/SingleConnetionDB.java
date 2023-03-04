@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class SingleConnetionDB {
 	
-	private final static String DB_URL = "jdbc:postgresql://localhost:5433/projectjsp?autoReconnect=true";
+	private final static String DB_URL = "jdbc:postgresql://localhost:5433/postgres?autoReconnect=true";
 	private final static String DB_USER = "postgres";
 	private final static String DB_PASSWORD = "docker";
 	private static Connection connection = null;

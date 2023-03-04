@@ -10,10 +10,15 @@ import models.Login;
 
 import java.io.IOException;
 
+import dao.DAOLoginRepository;
+
 
 @WebServlet("/Login")
 public class ServletLogin extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+	private DAOLoginRepository daoLoginRepository = new DAOLoginRepository();
    
     public ServletLogin() {
     }
@@ -33,7 +38,7 @@ public class ServletLogin extends HttpServlet {
 			login.setUsername(username);
 			login.setPassword(password);
 			
-			if(login.getUsername().equalsIgnoreCase("admin") && login.getPassword().equals("admin")) {
+			if(daoLoginRepository.validateAuthentication(login)) {
 				
 				if(url == null || url.equals("null")) {
 					url = "main/home.jsp";
