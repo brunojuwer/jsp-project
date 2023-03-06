@@ -32,34 +32,43 @@ public class ServletLogin extends HttpServlet {
 		String password = request.getParameter("password");
 		String url = request.getParameter("url");
 				
-		
+		try {
 		if(!username.isEmpty() && !password.isEmpty()) {
 			Login login = new Login();
 			login.setUsername(username);
 			login.setPassword(password);
 			
-			if(daoLoginRepository.validateAuthentication(login)) {
-				
-				if(url == null || url.equals("null")) {
-					url = "main/home.jsp";
-				}
-				
-				request.getSession().setAttribute("user", login.getUsername());
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
-				request.setAttribute("msg", "Username and Password can not be empty!");
-				requestDispatcher.forward(request, response);
-				
-				
-			}else {
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-				request.setAttribute("msg", "Username and Password can not be empty!");
-				requestDispatcher.forward(request, response);
-			}
 			
-		}else {
+				if(daoLoginRepository.validateAuthentication(login)) {
+					
+					if(url == null || url.equals("null")) {
+						url = "main/home.jsp";
+					}
+					
+					request.getSession().setAttribute("user", login.getUsername());
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
+					request.setAttribute("msg", "Username and Password can not be empty!");
+					requestDispatcher.forward(request, response);
+					
+					
+				}else {
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+					request.setAttribute("msg", "Username and Password can not be empty!");
+					requestDispatcher.forward(request, response);
+				}
+			 
+			
+		} else {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
 			request.setAttribute("msg", "Username and Password can not be empty!");
 			requestDispatcher.forward(request, response);
+		  }
+		} catch (Exception e) {
+			e.printStackTrace();
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("error.jsp");
+			request.setAttribute("msg", e.getMessage());
+			requestDispatcher.forward(request, response);
+			
 		}
 	}
 
